@@ -1,0 +1,10 @@
+{
+	"user": "mysy00",
+	"repo": "samp-achievements",
+	"tag": "0.0.1",
+	"entry": "test.pwn",
+	"output": "gamemodes/test.amx",
+	"dependencies": [
+		"pawn-lang/samp-stdlib"
+	]
+}
