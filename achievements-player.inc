@@ -1,7 +1,7 @@
 DEFINE_HOOK_REPLACEMENT(Achievement, Ach);
 
 forward Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:call = true);
-forward Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:call = true);
+forward Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
 forward Player_GetAchievementProgress(playerid, Achievement:id);
 forward bool:Player_IsAchievementCompleted(playerid, Achievement:id);
 

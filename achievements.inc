@@ -17,7 +17,7 @@
   #define MAX_ACHIEVEMENT_DESC    (256)
 #endif
 
-forward Achievement:Achievement_Define(const string:name[], string:desc[], points);
+forward Achievement:Achievement_Define(const string:name[], const string:desc[], points);
 forward bool:Achievement_IsValid(Achievement:id);
 forward bool:Achievement_GetName(Achievement:id, string:name[]);
 forward bool:Achievement_GetDesc(Achievement:id, string:desc[]);
