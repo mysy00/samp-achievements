@@ -1,6 +1,6 @@
 DEFINE_HOOK_REPLACEMENT(Achievement, Ach);
 
-forward Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:call = true);
+forward Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
 forward Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
 forward Player_GetAchievementProgress(playerid, Achievement:id);
 forward bool:Player_IsAchievementCompleted(playerid, Achievement:id);
@@ -10,10 +10,10 @@ forward OnPlayerCompleteAchievement(playerid, Achievement:id);
 
 static playerAchievementProgress[MAX_PLAYERS][MAX_ACHIEVEMENTS];
 
-Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:call = true) {
+Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
     new points = Player_GetAchievementProgress(playerid, id);
 
-    new ret = Player_SetAchievementProgress(playerid, id, points + progress, call);
+    new ret = Player_SetAchievementProgress(playerid, id, points + progress, callProgress, callCompletion);
 
     if (ret <= 0) {
         return ret;
