@@ -1,19 +1,19 @@
 DEFINE_HOOK_REPLACEMENT(Achievement, Ach);
 
-forward Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
-forward Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
-forward Player_GetAchievementProgress(playerid, Achievement:id);
-forward bool:Player_IsAchievementCompleted(playerid, Achievement:id);
+forward Achievement_GivePlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
+forward Achievement_SetPlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true);
+forward Achievement_GetPlayerProgress(playerid, Achievement:id);
+forward bool:Achievement_HasPlayerCompleted(playerid, Achievement:id);
 
 forward OnPlayerProgressAchievement(playerid, Achievement:id, progress);
 forward OnPlayerCompleteAchievement(playerid, Achievement:id);
 
-static playerAchievementProgress[MAX_PLAYERS][MAX_ACHIEVEMENTS];
+static s_playerAchievementProgress[MAX_PLAYERS][MAX_ACHIEVEMENTS];
 
-Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
-    new points = Player_GetAchievementProgress(playerid, id);
+Achievement_GivePlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
+    new points = Achievement_GetPlayerProgress(playerid, id);
 
-    new ret = Player_SetAchievementProgress(playerid, id, points + progress, callProgress, callCompletion);
+    new ret = Achievement_SetPlayerProgress(playerid, id, points + progress, callProgress, callCompletion);
 
     if (ret <= 0) {
         return ret;
@@ -22,7 +22,7 @@ Player_GiveAchievementProgress(playerid, Achievement:id, progress, bool:callProg
     return 1;
 }
 
-Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
+Achievement_SetPlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
     if (!IsPlayerConnected(playerid)) {
         return 0;
     }
@@ -31,13 +31,13 @@ Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgr
         return -1;
     }
 
-    if (Player_IsAchievementCompleted(playerid, id)) {
+    if (Achievement_HasPlayerCompleted(playerid, id)) {
         return -2;
     }
 
     new points = Achievement_GetPoints(id);
 
-    playerAchievementProgress[playerid][_:id] = (progress = clamp(progress, 0, points));
+    s_playerAchievementProgress[playerid][_:id] = (progress = clamp(progress, 0, points));
 
     if (callProgress) {
         CallLocalFunction("OnPlayerProgressAchievement", "ddd", playerid, _:id, progress);
@@ -50,7 +50,7 @@ Player_SetAchievementProgress(playerid, Achievement:id, progress, bool:callProgr
     return 1;
 }
 
-Player_GetAchievementProgress(playerid, Achievement:id) {
+Achievement_GetPlayerProgress(playerid, Achievement:id) {
     if (!IsPlayerConnected(playerid)) {
         return 0;
     }
@@ -59,12 +59,12 @@ Player_GetAchievementProgress(playerid, Achievement:id) {
         return -1;
     }
 
-    return playerAchievementProgress[playerid][_:id];
+    return s_playerAchievementProgress[playerid][_:id];
 }
 
-bool:Player_IsAchievementCompleted(playerid, Achievement:id) {
+bool:Achievement_HasPlayerCompleted(playerid, Achievement:id) {
     new points = Achievement_GetPoints(id);
-    new playerProgress = Player_GetAchievementProgress(playerid, id);
+    new playerProgress = Achievement_GetPlayerProgress(playerid, id);
 
     if (points == playerProgress) {
         return true;
