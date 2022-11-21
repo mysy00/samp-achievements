@@ -10,7 +10,7 @@ forward OnPlayerCompleteAchievement(playerid, Achievement:id);
 
 static s_playerAchievementProgress[MAX_PLAYERS][MAX_ACHIEVEMENTS];
 
-Achievement_GivePlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
+stock Achievement_GivePlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
     new points = Achievement_GetPlayerProgress(playerid, id);
 
     new ret = Achievement_SetPlayerProgress(playerid, id, points + progress, callProgress, callCompletion);
@@ -22,7 +22,7 @@ Achievement_GivePlayerProgress(playerid, Achievement:id, progress, bool:callProg
     return 1;
 }
 
-Achievement_SetPlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
+stock Achievement_SetPlayerProgress(playerid, Achievement:id, progress, bool:callProgress = true, callCompletion = true) {
     if (!IsPlayerConnected(playerid)) {
         return 0;
     }
@@ -50,7 +50,7 @@ Achievement_SetPlayerProgress(playerid, Achievement:id, progress, bool:callProgr
     return 1;
 }
 
-Achievement_GetPlayerProgress(playerid, Achievement:id) {
+stock Achievement_GetPlayerProgress(playerid, Achievement:id) {
     if (!IsPlayerConnected(playerid)) {
         return 0;
     }
@@ -62,7 +62,7 @@ Achievement_GetPlayerProgress(playerid, Achievement:id) {
     return s_playerAchievementProgress[playerid][_:id];
 }
 
-bool:Achievement_HasPlayerCompleted(playerid, Achievement:id) {
+stock bool:Achievement_HasPlayerCompleted(playerid, Achievement:id) {
     new points = Achievement_GetPoints(id);
     new playerProgress = Achievement_GetPlayerProgress(playerid, id);
 

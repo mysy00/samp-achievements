@@ -35,7 +35,7 @@ static achievementData[MAX_ACHIEVEMENTS][E_ACHIEVEMENT_DATA];
 
 new Iterator:Achievement < MAX_ACHIEVEMENTS > ;
 
-Achievement:Achievement_Define(const string:name[], const string:desc[], points) {
+stock Achievement:Achievement_Define(const string:name[], const string:desc[], points) {
     new id = Iter_Alloc(Achievement);
 
     if (id == INVALID_ITERATOR_SLOT) {
@@ -49,11 +49,11 @@ Achievement:Achievement_Define(const string:name[], const string:desc[], points)
     return Achievement:id;
 }
 
-bool:Achievement_IsValid(Achievement:id) {
+stock bool:Achievement_IsValid(Achievement:id) {
     return Iter_Contains(Achievement, _:id);
 }
 
-bool:Achievement_GetName(Achievement:id, string:name[]) {
+stock bool:Achievement_GetName(Achievement:id, string:name[]) {
     if (!Achievement_IsValid(id)) {
         return false;
     }
@@ -64,7 +64,7 @@ bool:Achievement_GetName(Achievement:id, string:name[]) {
     return true;
 }
 
-bool:Achievement_GetDesc(Achievement:id, string:desc[]) {
+stock bool:Achievement_GetDesc(Achievement:id, string:desc[]) {
     if (!Achievement_IsValid(id)) {
         return false;
     }
@@ -75,7 +75,7 @@ bool:Achievement_GetDesc(Achievement:id, string:desc[]) {
     return true;
 }
 
-Achievement_GetPoints(Achievement:id) {
+stock Achievement_GetPoints(Achievement:id) {
     if (!Achievement_IsValid(id)) {
         return 0;
     }
