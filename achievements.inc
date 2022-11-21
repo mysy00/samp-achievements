@@ -21,6 +21,7 @@ forward Achievement:Achievement_Define(const string:name[], const string:desc[],
 forward bool:Achievement_IsValid(Achievement:id);
 forward bool:Achievement_GetName(Achievement:id, string:name[]);
 forward bool:Achievement_GetDesc(Achievement:id, string:desc[]);
+forward bool:Achievement_GetDescByName(const string:name[], string:desc[]);
 
 // Necessary points to complete the achievement.
 forward Achievement_GetPoints(Achievement:id);
@@ -73,6 +74,22 @@ stock bool:Achievement_GetDesc(Achievement:id, string:desc[]) {
     strcat(desc, achievementData[_:id][E_ACH_DESC], MAX_ACHIEVEMENT_DESC);
 
     return true;
+}
+
+stock bool:Achievement_GetDescByName(const string:name[], string:desc[]) {
+    desc[0] = EOS;
+
+    foreach(new a : Achievement) {
+        if (strcmp(achievementData[a][E_ACH_NAME], name) == 0) {
+
+            strcat(desc, achievementData[a][E_ACH_DESC], MAX_ACHIEVEMENT_DESC);
+
+            return true;
+        }
+    }
+
+
+    return false;
 }
 
 stock Achievement_GetPoints(Achievement:id) {
